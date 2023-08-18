@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom Card Deck</title>
+  <style>
+    .card {
+      width: 75%;
+      height: 75%;
+      background-color: lightblue;
+      border: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 10px;
+      text-align: center;
+      transition: opacity 0.25s; /* Updated duration to 0.25 seconds */
+    }
+    .large-font {
+      font-size: 40px;
+    }
+    .card.dark-green-bg {
+      background-color: darkgreen;
+      color: white;
+    }
+    .card.gray-bg {
+      background-color: gray;
+      color: white;
+    }
+    .card.orange-bg {
+      background-color: orange;
+    }
+  </style>
+</head>
+<body>
+  <div id="deck" onclick="revealCard()">
+    <div class="card" id="card">Tap to reveal<br>next card</div>
+  </div>
+
+  <script>
+    const cards = ["skip 2", "3", "6 reshuffle", "0 free", "5", "4", "skip 2", "X transfer", "4", "3", "3", "4", "X transfer", "skip 3", "5"];
+    let shuffledCards = [...cards];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(shuffledCards);
+
+    let revealedCardIndex = -1;
+
+    function revealCard() {
+      const cardElement = document.getElementById('card');
+      cardElement.style.opacity = 0;
+      setTimeout(() => {
+        revealedCardIndex++;
+        if (revealedCardIndex < shuffledCards.length) {
+          const card = shuffledCards[revealedCardIndex];
+          cardElement.innerHTML = formatCardName(card);
+          removeBackgroundClasses(cardElement);
+          const backgroundClass = getBackgroundClass(card);
+          if (backgroundClass) {
+            cardElement.classList.add(backgroundClass);
+          }
+          cardElement.style.opacity = 1;
+  
+          if (card === '6 reshuffle') {
+            shuffle(shuffledCards);
+            revealedCardIndex = -1;
+          }
+        } else {
+          alert('All cards revealed!');
+        }
+      }, 250); // 0.25 seconds
+    }
+
+    function formatCardName(card) {
+      const words = card.split(' ');
+      const formattedWords = words.map(word => {
+        if (word === 'X' || /^\d+$/.test(word)) {
+          return `<span class="large-font">${word}</span>`;
+        } else {
+          return word;
+        }
+      });
+      return formattedWords.join('<br>');
+    }
+
+    function getBackgroundClass(card) {
+      if (card.includes('free')) {
+        return 'dark-green-bg';
+      } else if (card.includes('transfer')) {
+        return 'gray-bg';
+      } else if (card.includes('skip')) {
+        return 'orange-bg';
+      } else {
+        return '';
+      }
+    }
+    
+    function removeBackgroundClasses(element) {
+      element.classList.remove('dark-green-bg', 'gray-bg', 'orange-bg');
+    }
+  </script>
+</body>
+</html>
