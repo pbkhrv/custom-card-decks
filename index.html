@@ -7,7 +7,7 @@
       width: 75%;
       height: 75%;
       background-color: lightblue;
-      border-radius: 10%;
+      border-radius: 10vmin;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -23,7 +23,7 @@
       transition: opacity 0.1s; /* Animation duration */
     }
     .large-font {
-      font-family: 'Courier New', Courier, monospace;
+      font-family: sans-serif;
       font-weight: bold;
       font-size: 30vw; /* Font size based on viewport width */
       /* display: inline-block; */
@@ -33,14 +33,14 @@
       text-align: center;
       vertical-align: text-top;
       border-radius: 50%;
-      width: 30vmin;
-      height: 30vmin;
-      line-height: 1.1;
+      width: 35vmin;
+      height: 35vmin;
+      line-height: 1.2;
     }
     .small-font {
       padding-top: 15px;
       padding-bottom: 15px;
-      font-size: 10vmin;
+      font-size: 9vmin;
     }
     .card.dark-green-bg {
       background-color: darkgreen;
@@ -61,7 +61,7 @@
   </div>
 
   <script>
-    const cards = ["skip 2", "3", "6 Re-Shuffle", "O Free", "5", "4", "Skip 2", "X Transfer", "4", "3", "3", "4", "X Transfer", "Skip 3", "5"];
+    const cards = ["Skip 2", "3", "6 Re-Shuffle", "O Free", "5", "4", "Skip 2", "X Transfer", "4", "3", "3", "4", "X Transfer", "Skip 3", "5"];
     let shuffledCards = [...cards];
 
     function shuffle(array) {
