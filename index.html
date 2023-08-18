@@ -7,7 +7,7 @@
       width: 75%;
       height: 75%;
       background-color: lightblue;
-      border: 1px solid black;
+      border-radius: 10%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -20,10 +20,27 @@
       cursor: pointer;
       padding: 10px;
       text-align: center;
-      transition: opacity 0.25s; /* Updated duration to 0.25 seconds */
+      transition: opacity 0.1s; /* Animation duration */
     }
     .large-font {
-      font-size: 40px;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      font-size: 30vw; /* Font size based on viewport width */
+      /* display: inline-block; */
+      background-color: black;
+      color: white;
+      line-height: 1;
+      text-align: center;
+      vertical-align: text-top;
+      border-radius: 50%;
+      width: 30vmin;
+      height: 30vmin;
+      line-height: 1.1;
+    }
+    .small-font {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      font-size: 10vmin;
     }
     .card.dark-green-bg {
       background-color: darkgreen;
@@ -40,11 +57,11 @@
 </head>
 <body>
   <div id="deck" onclick="revealCard()">
-    <div class="card" id="card">Tap to reveal<br>next card</div>
+    <div class="card" id="card">Tap to begin</div>
   </div>
 
   <script>
-    const cards = ["skip 2", "3", "6 reshuffle", "0 free", "5", "4", "skip 2", "X transfer", "4", "3", "3", "4", "X transfer", "skip 3", "5"];
+    const cards = ["skip 2", "3", "6 Re-Shuffle", "O Free", "5", "4", "Skip 2", "X Transfer", "4", "3", "3", "4", "X Transfer", "Skip 3", "5"];
     let shuffledCards = [...cards];
 
     function shuffle(array) {
@@ -73,34 +90,34 @@
           }
           cardElement.style.opacity = 1;
   
-          if (card === '6 reshuffle') {
+          if (card === '6 Re-Shuffle') {
             shuffle(shuffledCards);
             revealedCardIndex = -1;
           }
         } else {
           alert('All cards revealed!');
         }
-      }, 250); // 0.25 seconds
+      }, 100); // 0.1 seconds
     }
 
     function formatCardName(card) {
       const words = card.split(' ');
       const formattedWords = words.map(word => {
-        if (word === 'X' || /^\d+$/.test(word)) {
+        if (word === 'X' || word === 'O' || /^\d+$/.test(word)) {
           return `<span class="large-font">${word}</span>`;
         } else {
-          return word;
+          return `<span class="small-font">${word}</span>`;
         }
       });
-      return formattedWords.join('<br>');
+      return formattedWords.join('');
     }
 
     function getBackgroundClass(card) {
-      if (card.includes('free')) {
+      if (card.includes('Free')) {
         return 'dark-green-bg';
-      } else if (card.includes('transfer')) {
+      } else if (card.includes('Transfer')) {
         return 'gray-bg';
-      } else if (card.includes('skip')) {
+      } else if (card.includes('Skip')) {
         return 'orange-bg';
       } else {
         return '';
